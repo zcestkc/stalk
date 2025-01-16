@@ -33,7 +33,7 @@ module.exports = {
         'plugin:import/typescript',
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
-        // 'plugin:react-hooks/recommended',
+        // 'plugin:react-hooks/recommended', // TODO: fix this
         'plugin:jsx-a11y/recommended',
         'plugin:prettier/recommended',
         'plugin:testing-library/react',
