@@ -21,12 +21,6 @@ export const paths = {
     dashboard: {
       getHref: () => '/app',
     },
-    discussions: {
-      getHref: () => '/app/discussions',
-    },
-    discussion: {
-      getHref: (id: string) => `/app/discussions/${id}`,
-    },
     users: {
       getHref: () => '/app/users',
     },
