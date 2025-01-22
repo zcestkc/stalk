@@ -14,7 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer/drawer';
-import { Button } from '@/components/ui/button/button';
+import { Button } from '@/components/ui/button';
 import { title } from 'process';
 
 type SideNavigationItem = {

@@ -1,4 +1,4 @@
-import { Button } from '../ui/button/button';
+import { Button } from '../ui/button';
 
 export const MainErrorFallback = () => {
   return (
