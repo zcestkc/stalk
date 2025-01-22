@@ -1,4 +1,25 @@
+'use client';
+
+import { useUser } from '@/lib/auth';
+
+type EntryProps = {
+  label: string;
+  value: string;
+};
+const Entry = ({ label, value }: EntryProps) => (
+  <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+    <dt className="text-sm font-medium text-gray-500">{label}</dt>
+    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+      {value}
+    </dd>
+  </div>
+);
+
 export const Profile = () => {
+  const user = useUser();
+
+  if (!user) return null;
+
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
@@ -14,11 +35,11 @@ export const Profile = () => {
       </div>
       <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl className="sm:divide-y sm:divide-gray-200">
-          {/* <Entry label="First Name" value={user.data?.firstName ?? ''} />
+          <Entry label="First Name" value={user.data?.firstName ?? ''} />
           <Entry label="Last Name" value={user.data?.lastName ?? ''} />
           <Entry label="Email Address" value={user.data?.email ?? ''} />
           <Entry label="Role" value={user.data?.role ?? ''} />
-          <Entry label="Bio" value={user.data?.bio ?? ''} /> */}
+          <Entry label="Bio" value={user.data?.bio ?? ''} />
         </dl>
       </div>
     </div>

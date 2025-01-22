@@ -28,9 +28,5 @@ export const paths = {
       getHref: () => '/app/profile',
     },
   },
-  public: {
-    discussion: {
-      getHref: (id: string) => `/public/discussions/${id}`,
-    },
-  },
+  public: {},
 } as const;
