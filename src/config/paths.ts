@@ -21,6 +21,9 @@ export const paths = {
     home: {
       getHref: () => '/app',
     },
+    cryptos: {
+      getHref: () => '/app/cryptos',
+    },
     users: {
       getHref: () => '/app/users',
     },

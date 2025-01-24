@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, PanelLeft, Users } from 'lucide-react';
+import { Home, PanelLeft, Users, Bitcoin } from 'lucide-react';
 import { paths } from '@/config/paths';
 import { cn } from '@/utils/cn';
 import { usePathname } from 'next/navigation';
@@ -27,6 +27,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const navigation = [
     { name: 'Home', to: paths.app.root.getHref(), icon: Home },
+    {
+      name: 'Cryptos',
+      to: paths.app.cryptos.getHref(),
+      icon: Bitcoin,
+    },
     { name: 'Account', to: paths.app.profile.getHref(), icon: Users },
   ].filter(Boolean) as SideNavigationItem[];
 

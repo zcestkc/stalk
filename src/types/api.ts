@@ -7,11 +7,7 @@ export type Entity<T> = {
   [K in keyof T]: T[K];
 } & BaseEntity;
 
-export type User = Entity<{
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: 'ADMIN' | 'USER';
-  teamId: string;
-  bio: string;
-}>;
+export type Crypto = {
+  ['Meta Data']: {};
+  ['Time Series (Digital Currency Daily)']: {};
+};
