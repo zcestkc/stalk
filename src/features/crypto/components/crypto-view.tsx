@@ -18,7 +18,6 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   }
 
   const crypto = cryptoQuery.data;
-  console.log('crypto', crypto);
 
   if (!crypto) return null;
 
