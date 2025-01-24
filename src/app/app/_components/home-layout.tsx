@@ -115,7 +115,7 @@ function Fallback({ error }: { error: Error }) {
   return <p>Error: {error.message ?? 'Something went wrong!'}</p>;
 }
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+const HomeLayout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   return (
     <Layout>
@@ -126,4 +126,4 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default HomeLayout;

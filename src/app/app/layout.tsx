@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
-import DashboardLayout from './_components/dashboard-layout';
+import HomeLayout from './_components/home-layout';
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return <HomeLayout>{children}</HomeLayout>;
 };
 
 export default AppLayout;
