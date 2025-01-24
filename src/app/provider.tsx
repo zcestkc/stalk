@@ -1,6 +1,7 @@
 'use client';
 
 import { MainErrorFallback } from '@/components/errors/main';
+import { Notifications } from '@/components/ui/notifications';
 import { queryConfig } from '@/lib/react-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -22,7 +23,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallback}>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
+        {true && <ReactQueryDevtools />}
+        <Notifications />
         {children}
       </QueryClientProvider>
     </ErrorBoundary>

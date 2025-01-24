@@ -18,7 +18,7 @@ export const paths = {
     root: {
       getHref: () => '/app',
     },
-    dashboard: {
+    home: {
       getHref: () => '/app',
     },
     users: {

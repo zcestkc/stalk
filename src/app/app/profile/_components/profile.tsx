@@ -1,5 +1,6 @@
 'use client';
 
+import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 
 type EntryProps = {
@@ -17,7 +18,7 @@ const Entry = ({ label, value }: EntryProps) => (
 
 export const Profile = () => {
   const user = useUser();
-
+  const { addNotification } = useNotifications();
   if (!user) return null;
 
   return (
@@ -32,6 +33,16 @@ export const Profile = () => {
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           Personal details of the user.
         </p>
+        <button
+          onClick={() =>
+            addNotification({
+              type: 'success',
+              title: 'Comment Created',
+            })
+          }
+        >
+          Test Button
+        </button>
       </div>
       <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl className="sm:divide-y sm:divide-gray-200">
