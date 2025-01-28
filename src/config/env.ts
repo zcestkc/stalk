@@ -5,7 +5,7 @@ const createEnv = () => {
   const EnvSchema = z.object({
     ALPHA_VANTAGE_API_KEY: z.string(),
     API_URL: z.string(),
-    DEV: z.boolean(),
+    DEV: z.string(),
   });
 
   const envVars = {
