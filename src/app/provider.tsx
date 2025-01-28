@@ -19,11 +19,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         defaultOptions: queryConfig,
       }),
   );
-  console.log(process.env.DEV);
+
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallback}>
       <QueryClientProvider client={queryClient}>
-        {true && <ReactQueryDevtools />}
+        {process.env.DEV && <ReactQueryDevtools />}
         <Notifications />
         {children}
       </QueryClientProvider>
