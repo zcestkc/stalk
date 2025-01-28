@@ -45,7 +45,7 @@ const CryptoPage = async ({
   return (
     <>
       {Object.values(crypto['Meta Data']).map((x) => (
-        <h1 key={x}>{x}</h1>
+        <p key={x}>{x}</p>
       ))}
     </>
   );
