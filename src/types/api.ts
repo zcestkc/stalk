@@ -10,4 +10,5 @@ export type Entity<T> = {
 export type Crypto = {
   ['Meta Data']: {};
   ['Time Series (Digital Currency Daily)']: {};
+  Information?: string;
 };

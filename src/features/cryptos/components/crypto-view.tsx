@@ -25,12 +25,13 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
     <div>
       <div className="flex justify-between">
         <Link
-          href={paths.home.getHref()}
+          href={paths.app.cryptos.getHref()}
           className="flex items-center gap-2 text-gray-500"
         >
           <LinkIcon size={16} />
-          Back to home
+          Back to cryptos
         </Link>
+        <h1>{crypto.Information}</h1>
       </div>
     </div>
   );

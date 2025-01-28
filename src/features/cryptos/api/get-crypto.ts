@@ -9,7 +9,7 @@ export const getCrypto = ({
   cryptoId,
 }: {
   cryptoId: string;
-}): Promise<{ data: Crypto }> => {
+}): Promise<Crypto> => {
   const apikey = env.ALPHA_VANTAGE_API_KEY;
 
   return api.get('https://www.alphavantage.co/query', {

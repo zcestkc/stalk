@@ -43,17 +43,8 @@ const CryptoPage = async ({
   if (!crypto) return <div>Crypto not found</div>;
 
   return (
-    <>
-      {Object.values(crypto['Meta Data']).map((x) => (
-        <p key={x}>{x}</p>
-      ))}
-    </>
-  );
-
-  return (
     <HydrationBoundary state={dehydratedState}>
-      {/* <Crypto cryptoId={cryptoId} /> */}
-      <h1>1</h1>
+      <Crypto cryptoId={cryptoId} />
     </HydrationBoundary>
   );
 };
