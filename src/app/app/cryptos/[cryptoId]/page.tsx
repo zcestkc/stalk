@@ -1,4 +1,4 @@
-import { getCryptoQueryOptions } from '@/features/crypto/api/get-crypto';
+import { getCryptoQueryOptions } from '@/features/cryptos/api/get-crypto';
 import {
   dehydrate,
   HydrationBoundary,
@@ -40,11 +40,20 @@ const CryptoPage = async ({
     getCryptoQueryOptions(cryptoId).queryKey,
   );
 
-  if (!crypto?.data) return <div>Crypto not found</div>;
+  if (!crypto) return <div>Crypto not found</div>;
+
+  return (
+    <>
+      {Object.values(crypto['Meta Data']).map((x) => (
+        <h1 key={x}>{x}</h1>
+      ))}
+    </>
+  );
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <Crypto cryptoId={cryptoId} />
+      {/* <Crypto cryptoId={cryptoId} /> */}
+      <h1>1</h1>
     </HydrationBoundary>
   );
 };
