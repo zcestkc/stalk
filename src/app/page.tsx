@@ -13,7 +13,7 @@ const HomePage = () => {
           <span className="block">Stalk</span>
         </h2>
         <img src="/logo.svg" alt="stock chart" />
-        <p>Monitor your favourite stocks</p>
+        <p>An investment simulator</p>
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
             <Link
