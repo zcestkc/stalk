@@ -5,11 +5,23 @@ import { useCrypto } from '../api/get-crypto';
 import { paths } from '@/config/paths';
 import Link from 'next/link';
 import { testData } from '../../../../mock';
+import { Crypto } from '@/types/api';
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const cryptoQuery = useCrypto({
     cryptoId,
   });
+
   if (cryptoQuery.isLoading) {
     return (
       <div className="flex h-48 w-full items-center justify-center">
@@ -21,18 +33,48 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const crypto = cryptoQuery.data;
 
   if (!crypto) return null;
-  console.log(JSON.parse(testData));
+
+  const mockData: Crypto = JSON.parse(testData);
+  const formattedData = Object.entries(
+    mockData['Time Series (Digital Currency Daily)'],
+  )
+    .map(([date, values]) => ({
+      date,
+      open: parseFloat(values['1. open']),
+      high: parseFloat(values['2. high']),
+      low: parseFloat(values['3. low']),
+      close: parseFloat(values['4. close']),
+      volume: parseFloat(values['5. volume']),
+    }))
+    .reverse();
+  console.log(formattedData);
   return (
     <div>
+      <Link
+        href={paths.app.cryptos.getHref()}
+        className="flex items-center gap-2 text-gray-500"
+      >
+        <LinkIcon size={16} />
+        Back to cryptos
+      </Link>
       <div className="flex justify-between">
-        <Link
-          href={paths.app.cryptos.getHref()}
-          className="flex items-center gap-2 text-gray-500"
-        >
-          <LinkIcon size={16} />
-          Back to cryptos
-        </Link>
-        <h1>{crypto.Information}</h1>
+        {/* <h1>{crypto.Information}</h1>
+         */}
+        <h2 className="text-xl font-bold mb-4">{cryptoId} Price Trends</h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={formattedData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <YAxis orientation="right" />
+            <XAxis dataKey="date" />
+            <Tooltip />
+            <Legend />
+            <Line dataKey="open" stroke="#8884d8" name="Open" />
+            <Line dataKey="high" stroke="#82ca9d" name="High" />
+            <Line dataKey="low" stroke="#ffc658" name="Low" />
+            <Line dataKey="close" stroke="#ffc658" name="Close" />
+            <Line dataKey="volume" stroke="#ffc658" name="Volume" />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
