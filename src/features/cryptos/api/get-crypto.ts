@@ -15,7 +15,7 @@ export const getCrypto = ({
   return api.get('https://www.alphavantage.co/query', {
     params: {
       function: 'DIGITAL_CURRENCY_DAILY',
-      market: 'EUR',
+      market: 'EUR', // TODO change to USD
       symbol: cryptoId,
       apikey,
     },
