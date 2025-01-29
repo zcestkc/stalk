@@ -4,6 +4,7 @@ import { Link as LinkIcon } from 'lucide-react';
 import { useCrypto } from '../api/get-crypto';
 import { paths } from '@/config/paths';
 import Link from 'next/link';
+import { testData } from '../../../../mock';
 
 export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const cryptoQuery = useCrypto({
@@ -20,7 +21,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const crypto = cryptoQuery.data;
 
   if (!crypto) return null;
-
+  console.log(JSON.parse(testData));
   return (
     <div>
       <div className="flex justify-between">
