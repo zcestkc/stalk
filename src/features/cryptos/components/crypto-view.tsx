@@ -47,7 +47,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
       volume: parseFloat(values['5. volume']),
     }))
     .reverse();
-  console.log(formattedData);
+
   return (
     <div>
       <Link
@@ -64,15 +64,15 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formattedData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <YAxis orientation="right" />
+            <YAxis orientation="right" domain={['auto', 'auto']} />
             <XAxis dataKey="date" />
             <Tooltip />
             <Legend />
-            <Line dataKey="open" stroke="#8884d8" name="Open" />
-            <Line dataKey="high" stroke="#82ca9d" name="High" />
+            <Line dataKey="open" stroke="#8884d8" name="Open" dot={false} />
+            {/* <Line dataKey="high" stroke="#82ca9d" name="High" />
             <Line dataKey="low" stroke="#ffc658" name="Low" />
             <Line dataKey="close" stroke="#ffc658" name="Close" />
-            <Line dataKey="volume" stroke="#ffc658" name="Volume" />
+            <Line dataKey="volume" stroke="#ffc658" name="Volume" /> */}
           </LineChart>
         </ResponsiveContainer>
       </div>
