@@ -36,5 +36,10 @@ export const Typewriter = ({ text, delay, infinite }: TypewriterProps) => {
     return () => clearTimeout(timeout);
   }, [currentIndex, delay, infinite, text]);
 
-  return <span>&nbsp;{currentText}</span>;
+  return (
+    <span className="select-none">
+      &nbsp;{currentText}
+      <span className="animate-ping">|</span>
+    </span>
+  );
 };
