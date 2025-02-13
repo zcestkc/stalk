@@ -30,7 +30,7 @@ export const Typewriter = ({ text, delay, infinite }: TypewriterProps) => {
         setCurrentText('');
         setCurrentIndex(0);
         setIsPaused(false);
-      }, 1000);
+      }, 2000);
     }
 
     return () => clearTimeout(timeout);
