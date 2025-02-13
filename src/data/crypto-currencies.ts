@@ -3,7 +3,7 @@ interface CryptoCurrency {
   name: string;
 }
 
-const currencies: CryptoCurrency[] = [
+export const cryptoCurrencies: CryptoCurrency[] = [
   { code: '1ST', name: 'FirstBlood' },
   { code: '2GIVE', name: 'GiveCoin' },
   { code: '808', name: '808Coin' },
