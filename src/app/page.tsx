@@ -3,7 +3,6 @@ import { Typewriter } from '@/components/ui/header/Typewriter';
 import { Link } from '@/components/ui/link/link';
 import { paths } from '@/config/paths';
 import { GitHubLogoIcon, RocketIcon } from '@radix-ui/react-icons';
-import { TypeAnimation } from 'react-type-animation';
 
 const HomePage = () => {
   // const isLoggedIn = checkLoggedIn(); // TODO: implement
