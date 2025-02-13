@@ -20,7 +20,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const cryptoQuery = useCrypto({
     cryptoId,
   });
-  console.log(cryptoQuery.data);
+
   if (cryptoQuery.isLoading) {
     return (
       <div className="flex h-48 w-full items-center justify-center">
@@ -32,7 +32,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const crypto = cryptoQuery.data;
 
   if (!crypto) return null;
-
+  // console.log(crypto.Information); // this shows that you've hit limit
   const mockData: Crypto = JSON.parse(testData);
   const formattedData = Object.entries(
     mockData['Time Series (Digital Currency Daily)'],
