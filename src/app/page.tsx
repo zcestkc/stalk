@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Typewriter } from '@/components/ui/header/Typewriter';
 import { Link } from '@/components/ui/link/link';
 import { paths } from '@/config/paths';
+import Image from 'next/image';
 import { GitHubLogoIcon, RocketIcon } from '@radix-ui/react-icons';
 
 const HomePage = () => {
@@ -12,10 +13,10 @@ const HomePage = () => {
     <div className="flex h-screen items-center bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl select-none">
-          Stalk
+          STALK
         </h2>
         <Typewriter text="An investment simulator" delay={100} infinite />
-        <img src="/logo.svg" alt="stock chart" />
+        <Image src="/logo.svg" width={300} height={300} alt="Stalk Logo" />
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
             <Link
