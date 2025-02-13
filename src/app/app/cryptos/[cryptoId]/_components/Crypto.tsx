@@ -1,6 +1,10 @@
-import { useCrypto } from '@/features/cryptos/api/get-crypto';
+import { ContentLayout } from '@/components/layouts/content-layout';
 import { CryptoView } from '@/features/cryptos/components/crypto-view';
 
 export const Crypto = ({ cryptoId }: { cryptoId: string }) => {
-  return <CryptoView cryptoId={cryptoId} />;
+  return (
+    <ContentLayout title={cryptoId}>
+      <CryptoView cryptoId={cryptoId} />
+    </ContentLayout>
+  );
 };
