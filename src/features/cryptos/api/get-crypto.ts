@@ -1,9 +1,8 @@
-import { useQuery, queryOptions } from '@tanstack/react-query';
-
+import { env } from '@/config/env';
 import { api } from '@/lib/api-client';
 import { QueryConfig } from '@/lib/react-query';
 import { Crypto } from '@/types/api';
-import { env } from '@/config/env';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 
 export const getCrypto = ({
   cryptoId,
@@ -15,7 +14,7 @@ export const getCrypto = ({
   return api.get('https://www.alphavantage.co/query', {
     params: {
       function: 'DIGITAL_CURRENCY_DAILY',
-      market: 'EUR', // TODO change to USD
+      market: 'USD',
       symbol: cryptoId,
       apikey,
     },

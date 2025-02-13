@@ -1,27 +1,26 @@
 'use client';
 
-import { Link as LinkIcon } from 'lucide-react';
-import { useCrypto } from '../api/get-crypto';
 import { paths } from '@/config/paths';
-import Link from 'next/link';
-import { testData } from '../../../../mock';
 import { Crypto } from '@/types/api';
+import Link from 'next/link';
 import {
-  LineChart,
-  Line,
   CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from 'recharts';
+import { testData } from '../../../../mock';
+import { useCrypto } from '../api/get-crypto';
 
 export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   const cryptoQuery = useCrypto({
     cryptoId,
   });
-
+  console.log(cryptoQuery.data);
   if (cryptoQuery.isLoading) {
     return (
       <div className="flex h-48 w-full items-center justify-center">
@@ -54,13 +53,11 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
         href={paths.app.cryptos.getHref()}
         className="flex items-center gap-2 text-gray-500"
       >
-        <LinkIcon size={16} />
         Back to cryptos
       </Link>
       <div className="flex justify-between">
         {/* <h1>{crypto.Information}</h1>
          */}
-        <h2 className="text-xl font-bold mb-4">{cryptoId} Price Trends</h2>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formattedData}>
             <CartesianGrid strokeDasharray="3 3" />
