@@ -37,9 +37,9 @@ export const Typewriter = ({ text, delay, infinite }: TypewriterProps) => {
   }, [currentIndex, delay, infinite, text]);
 
   return (
-    <span className="select-none">
+    <p className="select-none">
       &nbsp;{currentText}
       <span className="animate-ping">|</span>
-    </span>
+    </p>
   );
 };
