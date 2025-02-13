@@ -1,10 +1,12 @@
+import { Home } from './_components/home';
+
 export const metadata = {
   title: 'Home',
   description: 'Home',
 };
 
 const DashboardPage = () => {
-  return <h1 className="mb-2">Home page</h1>;
+  return <Home />;
 };
 
 export default DashboardPage;

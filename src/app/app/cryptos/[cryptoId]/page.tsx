@@ -8,8 +8,8 @@ import {
 import { Crypto } from './_components/Crypto';
 
 export const metadata = {
-  title: 'Cryptos',
-  description: 'Cryptos',
+  title: 'Crypto',
+  description: 'Crypto',
 };
 
 const preloadData = async (cryptoId: string) => {

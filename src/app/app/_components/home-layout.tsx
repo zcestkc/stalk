@@ -1,12 +1,6 @@
 'use client';
 
-import { Home, PanelLeft, Users, Bitcoin } from 'lucide-react';
-import { paths } from '@/config/paths';
-import { cn } from '@/utils/cn';
-import { usePathname } from 'next/navigation';
-import { JSX, ReactNode } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import {
   Drawer,
   DrawerContent,
@@ -14,8 +8,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer/drawer';
-import { Button } from '@/components/ui/button';
-import { title } from 'process';
+import { paths } from '@/config/paths';
+import { cn } from '@/utils/cn';
+import { Bitcoin, Home, PanelLeft, Users } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { JSX, ReactNode } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 type SideNavigationItem = {
   name: string;
