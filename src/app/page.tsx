@@ -16,7 +16,13 @@ const HomePage = () => {
           STALK
         </h2>
         <Typewriter text="An investment simulator" delay={100} infinite />
-        <Image src="/logo.svg" width={300} height={300} alt="Stalk Logo" />
+        <Link
+          href={
+            isLoggedIn ? paths.app.root.getHref() : paths.auth.login.getHref()
+          }
+        >
+          <Image src="/logo.svg" width={300} height={300} alt="Stalk Logo" />
+        </Link>
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
             <Link
