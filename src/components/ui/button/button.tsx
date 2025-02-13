@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 import { cva, VariantProps } from 'class-variance-authority';
-import React from 'react';
+import React, { RefObject } from 'react';
 import { Spinner } from '../spinner/spinner';
 
 const buttonVariants = cva(
@@ -37,23 +37,31 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     isLoading?: boolean;
     icon?: React.ReactNode;
+    ref?: RefObject<HTMLButtonElement>;
   };
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, children, isLoading, icon, ...props }, ref) => {
-    return (
-      <button
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      >
-        {isLoading && <Spinner size="sm" className="text-current" />}
-        {!isLoading && icon && <span className="mr-2">{icon}</span>}
-        <span className="mx-2">{children}</span>
-      </button>
-    );
-  },
-);
+const Button = ({
+  className,
+  variant,
+  size,
+  children,
+  isLoading,
+  icon,
+  ref,
+  ...props
+}: ButtonProps) => {
+  return (
+    <button
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    >
+      {isLoading && <Spinner size="sm" className="text-current" />}
+      {!isLoading && icon && <span className="mr-2">{icon}</span>}
+      <span className="mx-2">{children}</span>
+    </button>
+  );
+};
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
