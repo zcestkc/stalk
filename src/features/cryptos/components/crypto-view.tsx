@@ -2,6 +2,7 @@
 
 import { paths } from '@/config/paths';
 import { Crypto } from '@/types/api';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import {
   CartesianGrid,
@@ -30,7 +31,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   }
 
   const crypto = cryptoQuery.data;
-  // console.log(crypto);
+  console.log(crypto);
   const data: Crypto = crypto?.Information ? JSON.parse(testData) : crypto;
 
   // // TODO: handle more gracefully
@@ -67,7 +68,7 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
         href={paths.app.cryptos.getHref()}
         className="flex items-center gap-2 text-gray-500"
       >
-        Back to cryptos
+        <ArrowLeftIcon /> Go Back
       </Link>
       <div className="flex justify-between">
         <ResponsiveContainer width="100%" height={400}>
