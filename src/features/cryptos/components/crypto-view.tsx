@@ -30,22 +30,23 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   }
 
   const crypto = cryptoQuery.data;
-  const data: Crypto = crypto?.Information || JSON.parse(testData);
+  // console.log(crypto);
+  const data: Crypto = crypto?.Information ? JSON.parse(testData) : crypto;
 
-  // TODO: handle more gracefully
-  if (crypto?.Information || !crypto) {
-    return (
-      <div>
-        <Link
-          href={paths.app.cryptos.getHref()}
-          className="flex items-center gap-2 text-gray-500"
-        >
-          Back to cryptos
-        </Link>
-        <h4>{crypto?.Information}</h4>
-      </div>
-    );
-  }
+  // // TODO: handle more gracefully
+  // if (crypto?.Information || !crypto) {
+  //   return (
+  //     <div>
+  //       <Link
+  //         href={paths.app.cryptos.getHref()}
+  //         className="flex items-center gap-2 text-gray-500"
+  //       >
+  //         Back to cryptos
+  //       </Link>
+  //       <h4>{crypto?.Information}</h4>
+  //     </div>
+  //   );
+  // }
 
   const formattedData = Object.entries(
     data['Time Series (Digital Currency Daily)'],
