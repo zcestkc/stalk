@@ -2,6 +2,7 @@ import { env } from '@/config/env';
 import { api } from '@/lib/api-client';
 import { QueryConfig } from '@/lib/react-query';
 import { Crypto } from '@/types/api';
+import { getTimeUntilEndOfDay } from '@/utils/eod';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 
 export const getCrypto = ({
@@ -14,8 +15,8 @@ export const getCrypto = ({
   return api.get('https://www.alphavantage.co/query', {
     params: {
       function: 'DIGITAL_CURRENCY_DAILY',
-      market: 'USD',
-      symbol: cryptoId,
+      market: 'EUR',
+      symbol: 'BTC', // correct this
       apikey,
     },
     external: true,
@@ -26,6 +27,7 @@ export const getCryptoQueryOptions = (cryptoId: string) => {
   return queryOptions({
     queryKey: ['cryptos', cryptoId],
     queryFn: () => getCrypto({ cryptoId }),
+    staleTime: getTimeUntilEndOfDay(),
   });
 };
 

@@ -30,11 +30,24 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
   }
 
   const crypto = cryptoQuery.data;
-
-  if (!crypto) return null;
-  // console.log(crypto.Information); // this shows that you've hit limit
   const mockData: Crypto = JSON.parse(testData);
+  // TODO: handle more gracefully
+  // if (crypto?.Information || !crypto) {
+  //   return (
+  //     <div>
+  //       <Link
+  //         href={paths.app.cryptos.getHref()}
+  //         className="flex items-center gap-2 text-gray-500"
+  //       >
+  //         Back to cryptos
+  //       </Link>
+  //       <h4>{crypto?.Information}</h4>
+  //     </div>
+  //   );
+  // }
+
   const formattedData = Object.entries(
+    // crypto['Time Series (Digital Currency Daily)'],
     mockData['Time Series (Digital Currency Daily)'],
   )
     .map(([date, values]) => ({
@@ -56,8 +69,6 @@ export const CryptoView = ({ cryptoId }: { cryptoId: string }) => {
         Back to cryptos
       </Link>
       <div className="flex justify-between">
-        {/* <h1>{crypto.Information}</h1>
-         */}
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formattedData}>
             <CartesianGrid strokeDasharray="3 3" />
