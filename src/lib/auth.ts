@@ -1,20 +1,17 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { User } from '@/types/api';
+import { AuthResponse, User } from '@/types/api';
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { z } from 'zod';
+import { api } from './api-client';
 
 export const getUser = async (): Promise<User> => {
-  // const response
-  const mockUser: User = {
-    firstName: 'Kwan',
-    lastName: 'Chan',
-    email: 'kwan.chan@example.com',
-    role: 'ADMIN',
-    teamId: 'team123',
-    bio: 'This is a mock user.',
-    id: '1',
-    createdAt: new Date('2021-01-01').getTime(),
-  };
+  const response = (await api.get('/auth/me')) as { data: User };
 
-  return Promise.resolve(mockUser);
+  return response.data;
 };
 
 const userQueryKey = ['user'];
@@ -27,3 +24,26 @@ export const getUserQueryOptions = () => {
 };
 
 export const useUser = () => useQuery(getUserQueryOptions());
+
+export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: loginWithUsernameAndPassword,
+    onSuccess: (data) => {
+      queryClient.setQueryData(userQueryKey, data.user);
+      onSuccess?.();
+    },
+  });
+};
+
+export const loginInputSchema = z.object({
+  username: z.string().min(1, 'Required'),
+  password: z.string().min(3, 'Required'),
+});
+
+export type LoginInput = z.infer<typeof loginInputSchema>;
+const loginWithUsernameAndPassword = (
+  data: LoginInput,
+): Promise<AuthResponse> => {
+  return api.post('/auth/login', data);
+};

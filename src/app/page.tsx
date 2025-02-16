@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Typewriter } from '@/components/ui/header/Typewriter';
 import { Link } from '@/components/ui/link/link';
 import { paths } from '@/config/paths';
-import Image from 'next/image';
+import { checkLoggedIn } from '@/utils/auth';
 import { GitHubLogoIcon, RocketIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
-const HomePage = () => {
-  // const isLoggedIn = checkLoggedIn(); // TODO: implement
-  const isLoggedIn = true;
+const HomePage = async () => {
+  const isLoggedIn = await checkLoggedIn();
 
   return (
     <div className="flex h-screen items-center bg-white">

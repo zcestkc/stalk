@@ -1,9 +1,8 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import { paths } from '@/config/paths';
-import { LoginForm } from '@/features/auth/components/login-form';
+import { LoginForm } from '@/features/auth/login-form';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -11,14 +10,13 @@ const LoginPage = () => {
   const redirectTo = searchParams?.get('redirectTo');
 
   return (
-    // <LoginForm
-    //   onSuccess={() =>
-    //     router.replace(
-    //       `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.dashboard.getHref()}`,
-    //     )
-    //   }
-    // />
-    <h1>Login</h1>
+    <LoginForm
+      onSuccess={() =>
+        router.replace(
+          `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.home.getHref()}`,
+        )
+      }
+    />
   );
 };
 

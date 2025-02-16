@@ -7,6 +7,16 @@ export type Entity<T> = {
   [K in keyof T]: T[K];
 } & BaseEntity;
 
+export type User = Entity<{
+  username: string;
+  roles: string[];
+}>;
+
+export type AuthResponse = {
+  accessToken: string;
+  refreshToken: User;
+};
+
 export type Crypto = {
   ['Meta Data']: MetaData;
   ['Time Series (Digital Currency Daily)']: DailyTimeSeries;
