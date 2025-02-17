@@ -30,7 +30,7 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: loginWithUsernameAndPassword,
     onSuccess: (data) => {
-      queryClient.setQueryData(userQueryKey, data.user);
+      queryClient.setQueryData(userQueryKey, data.accessToken);
       onSuccess?.();
     },
   });

@@ -12,6 +12,7 @@ type LayoutProps = {
 
 export const AuthLayout = ({ children }: LayoutProps) => {
   const user = useUser();
+  // console.log(user.data);
   const router = useRouter();
   const pathname = usePathname();
   const isLoginPage = pathname === paths.auth.login.getHref();
