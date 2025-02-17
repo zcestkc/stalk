@@ -2,13 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Typewriter } from '@/components/ui/header/Typewriter';
 import { Link } from '@/components/ui/link/link';
 import { paths } from '@/config/paths';
+import { api } from '@/lib/api-client';
 import { checkLoggedIn } from '@/utils/auth';
 import { GitHubLogoIcon, RocketIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 
 const HomePage = async () => {
   const isLoggedIn = await checkLoggedIn();
-
+  const stocks = await api.get('/stock-items/1');
+  console.log(stocks);
   return (
     <div className="flex h-screen items-center bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16">

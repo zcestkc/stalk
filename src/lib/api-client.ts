@@ -88,7 +88,7 @@ async function fetchApi<T>(
     cache,
     next,
   });
-
+  // console.log(response);
   if (!response.ok) {
     const message = (await response.json()).message || response.statusText;
     if (typeof window !== 'undefined') {
