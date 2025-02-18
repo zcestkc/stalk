@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     const newToken = await refreshAccessToken(refreshToken);
 
     if (newToken) {
-      console.log('Token refreshed successfully.');
+      console.log('Token refreshed successfully!');
       return NextResponse.next();
     } else {
       console.log('Token refresh failed, redirecting to login.');
