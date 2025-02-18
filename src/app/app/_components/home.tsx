@@ -7,8 +7,8 @@ export const Home = async () => {
   return (
     <ContentLayout title="Home">
       <h1 className="text-xl">Welcome</h1>
-      {response.map(({ name, amount }) => (
-        <p>
+      {response.map(({ name, amount }, i) => (
+        <p key={i}>
           {name} {amount}
         </p>
       ))}
