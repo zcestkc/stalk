@@ -5,6 +5,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (
+    // TODO better this
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/static/') ||
     pathname.startsWith('/favicon.ico') ||
@@ -16,22 +17,17 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
   const refreshToken = request.cookies.get('refreshToken');
 
-  // Allow login page to be accessed without redirection
   if (pathname === '/auth/login') {
     console.log('Login page accessed, skipping middleware.');
     return NextResponse.next();
   }
 
-  // If refresh token is missing, redirect to login
   if (!refreshToken) {
     console.log('No refresh token found, redirecting to login.');
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
-  // If access token is missing, try to refresh it
   if (!accessToken) {
-    console.log('Access token missing, attempting refresh.');
-
     const newToken = await refreshAccessToken();
 
     if (newToken) {
@@ -47,7 +43,6 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Refresh the access token using the refresh token
 async function refreshAccessToken() {
   try {
     const response = await fetch(
