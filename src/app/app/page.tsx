@@ -9,7 +9,7 @@ export const metadata = {
 const DashboardPage = () => {
   const fetchData = async () => {
     const response = await api.get('/stock-items');
-    console.log('here HOME', response);
+    console.log('works', response);
   };
   fetchData();
   return <Home />;
