@@ -45,16 +45,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 key={item.name}
                 href={item.to}
                 className={cn(
-                  'text-gray-300 hover:bg-gray-700 hover:text-white',
-                  'group flex flex-1 w-full items-center rounded-md p-2 text-base font-medium',
+                  'text-gray-300 hover:bg-gray-700 hover:text-white group flex flex-1 w-full items-center rounded-md p-2 text-base font-medium',
                   isActive && 'bg-gray-900 text-white',
                 )}
               >
                 <item.icon
-                  className={cn(
-                    'text-gray-400 group-hover:text-gray-300',
-                    'mr-4 size-6 shrink-0',
-                  )}
+                  className="text-gray-400 group-hover:text-gray-300 mr-4 size-6 shrink-0"
                   aria-hidden="true"
                 />
                 {item.name}
