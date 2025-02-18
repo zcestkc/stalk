@@ -37,7 +37,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-black sm:flex">
-        <nav className="flex flex-col items-center gap-4 px-2 py-4">
+        <nav className="flex flex-col gap-4 px-2 py-4">
           {navigation.map((item) => {
             const isActive = pathname === item.to;
             return (
