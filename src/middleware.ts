@@ -39,7 +39,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  console.log('Access token exists, proceeding.');
   return NextResponse.next();
 }
 
