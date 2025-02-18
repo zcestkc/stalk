@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
 async function refreshAccessToken() {
   try {
     const response = await fetch(
-      'http://localhost:5030/api/auth/refresh-token',
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
       {
         method: 'POST',
         credentials: 'include', // Ensures refresh token is included automatically
