@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-export const AUTH_TOKEN_COOKIE_NAME = 'stalk_app_token';
+export const AUTH_TOKEN_COOKIE_NAME = 'refreshToken';
 
 export const getAuthTokenCookie = async () => {
   if (typeof window !== 'undefined') return '';
