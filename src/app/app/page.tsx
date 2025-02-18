@@ -1,3 +1,4 @@
+import { api } from '@/lib/api-client';
 import { Home } from './_components/home';
 
 export const metadata = {
@@ -6,6 +7,11 @@ export const metadata = {
 };
 
 const DashboardPage = () => {
+  const fetchData = async () => {
+    const response = await api.get('/stock-items');
+    console.log('here HOME', response);
+  };
+  fetchData();
   return <Home />;
 };
 

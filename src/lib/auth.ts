@@ -9,9 +9,9 @@ import { z } from 'zod';
 import { api } from './api-client';
 
 export const getUser = async (): Promise<User> => {
-  const response = (await api.get('/auth/me')) as { data: User };
+  const response = (await api.get('/auth/me')) as User;
 
-  return response.data;
+  return response;
 };
 
 const userQueryKey = ['user'];
