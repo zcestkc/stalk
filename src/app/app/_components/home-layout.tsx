@@ -34,7 +34,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const logout = useLogout({
-    onSuccess: () => router.push(paths.auth.login.getHref(pathname)),
+    // onSuccess: () => router.push(paths.auth.login.getHref(pathname)),
+    onSuccess: () => router.push(paths.home.getHref()),
   });
   const navigation = [
     { name: 'Home', to: paths.app.root.getHref(), icon: Home },
