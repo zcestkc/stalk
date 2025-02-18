@@ -36,6 +36,21 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   });
 };
 
+export const useLogout = ({ onSuccess }: { onSuccess?: () => void }) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: userQueryKey });
+      onSuccess?.();
+    },
+  });
+};
+
+const logout = (): Promise<void> => {
+  return api.post('/auth/logout');
+};
+
 export const loginInputSchema = z.object({
   username: z.string().min(1, 'Required'),
   password: z.string().min(3, 'Required'),

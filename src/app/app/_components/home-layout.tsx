@@ -8,11 +8,19 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer/drawer';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown/dropdown';
 import { paths } from '@/config/paths';
+import { useLogout } from '@/lib/auth';
 import { cn } from '@/utils/cn';
-import { Bitcoin, Home, PanelLeft, Users } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Bitcoin, Home, PanelLeft, User2, Users } from 'lucide-react';
+import { default as Link } from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { JSX, ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -24,6 +32,10 @@ type SideNavigationItem = {
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const logout = useLogout({
+    onSuccess: () => router.push(paths.auth.login.getHref(pathname)),
+  });
   const navigation = [
     { name: 'Home', to: paths.app.root.getHref(), icon: Home },
     {
@@ -102,6 +114,33 @@ const Layout = ({ children }: { children: ReactNode }) => {
               </nav>
             </DrawerContent>
           </Drawer>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="overflow-hidden rounded-full"
+              >
+                <span className="sr-only">Open user menu</span>
+                <User2 className="size-6 rounded-full" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => router.push(paths.app.profile.getHref())}
+                className={cn('block px-4 py-2 text-sm text-gray-700')}
+              >
+                Your Profile
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className={cn('block px-4 py-2 text-sm text-gray-700 w-full')}
+                onClick={() => logout.mutate()}
+              >
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </header>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           {children}
