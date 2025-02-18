@@ -57,12 +57,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
               </Link>
             );
           })}
-          <Link
-            href={paths.home.getHref()}
-            className="text-gray-300 hover:bg-gray-700 hover:text-white group rounded-md p-2 w-full text-base font-medium"
-          >
-            Log out
-          </Link>
         </nav>
       </aside>
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-60">
