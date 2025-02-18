@@ -9,13 +9,10 @@ export type Entity<T> = {
 
 export type User = Entity<{
   username: string;
-  roles: string[];
+  role: string;
 }>;
 
-export type AuthResponse = {
-  accessToken: string;
-  refreshToken: User;
-};
+export type AuthResponse = User;
 
 export type Crypto = {
   ['Meta Data']: MetaData;
