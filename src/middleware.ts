@@ -1,16 +1,11 @@
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (
-    // TODO better this
-    pathname.startsWith('/_next/') ||
-    pathname.startsWith('/static/') ||
-    pathname.startsWith('/favicon.ico') ||
-    pathname.startsWith('/logo.svg')
-  ) {
+  if (!pathname.startsWith('/app') && !pathname.startsWith('/auth')) {
     return NextResponse.next();
   }
 
@@ -28,7 +23,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!accessToken) {
-    const newToken = await refreshAccessToken();
+    const newToken = await refreshAccessToken(refreshToken);
 
     if (newToken) {
       console.log('Token refreshed successfully.');
@@ -42,28 +37,25 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-async function refreshAccessToken() {
+async function refreshAccessToken(refreshToken: RequestCookie) {
+  const headers = new Headers({
+    Cookie: `${refreshToken.name}=${refreshToken.value}; `,
+  });
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
       {
         method: 'POST',
-        credentials: 'include', // Ensures refresh token is included automatically
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
       },
     );
 
     if (response.ok) {
-      const data = await response.json();
-      return { accessToken: data.accessToken };
+      return true;
     }
 
-    console.error('Failed to refresh token, ', response.status);
     return null;
   } catch (error) {
-    console.error('Error refreshing token:', error);
     return null;
   }
 }

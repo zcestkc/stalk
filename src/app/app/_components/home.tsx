@@ -1,5 +1,6 @@
 import { ContentLayout } from '@/components/layouts/content-layout';
 import { api } from '@/lib/api-client';
+import { TestClientComponent } from './test-client-component';
 
 export const Home = async () => {
   const response = await api.get('/stock-items');
@@ -12,6 +13,7 @@ export const Home = async () => {
           {name} {amount}
         </p>
       ))}
+      <TestClientComponent />
     </ContentLayout>
   );
 };
