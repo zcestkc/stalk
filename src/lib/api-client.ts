@@ -88,6 +88,7 @@ async function fetchApi<T>(
     next,
   });
 
+  // works on client component, not server, it uses pre middleware cookie value so i get 401 in the api call and the refresh call
   if (response.status === 401 && !isRetry) {
     const refreshed = await refreshAccessToken();
     if (refreshed) {
