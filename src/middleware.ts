@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
   const refreshToken = request.cookies.get('refreshToken');
 
-  if (pathname === '/auth/login' || pathname === '/') {
+  if (pathname.startsWith('/auth') || pathname === '/') {
     return NextResponse.next(); // Login page or landing page accessed, skipping middleware.
   }
 
