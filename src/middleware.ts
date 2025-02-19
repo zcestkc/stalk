@@ -16,16 +16,15 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!accessToken) {
-    const headers = new Headers({
-      Cookie: `${refreshToken.name}=${refreshToken.value}; `,
-    });
     try {
       console.log('refreshing in middleware');
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
         {
           method: 'POST',
-          headers,
+          headers: {
+            Cookie: `${refreshToken.name}=${refreshToken.value}; `,
+          },
         },
       );
 
