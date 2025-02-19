@@ -33,8 +33,6 @@ export const Profile = () => {
         message: 'Fetched user profile successfully.',
       });
     } catch (error) {
-      console.error('API Call Error:', error);
-
       addNotification({
         type: 'error',
         title: 'API Call Failed',
