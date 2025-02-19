@@ -124,7 +124,7 @@ async function refreshAccessToken(): Promise<boolean> {
       },
       credentials: 'include',
     });
-
+    // console.log(refreshRes.ok);
     if (refreshRes.ok) {
       console.log('refreshed in api client');
       return true; // Successfully refreshed token

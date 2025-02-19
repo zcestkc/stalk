@@ -30,7 +30,18 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: loginWithUsernameAndPassword,
     onSuccess: (data) => {
-      queryClient.setQueryData(userQueryKey, data.username);
+      queryClient.setQueryData(userQueryKey, data);
+      onSuccess?.();
+    },
+  });
+};
+
+export const useRegister = ({ onSuccess }: { onSuccess?: () => void }) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: registerWithUsernameAndPassword,
+    onSuccess: (data) => {
+      queryClient.setQueryData(userQueryKey, data);
       onSuccess?.();
     },
   });
@@ -61,4 +72,17 @@ const loginWithUsernameAndPassword = (
   data: LoginInput,
 ): Promise<AuthResponse> => {
   return api.post('/auth/login', data);
+};
+
+export const registerInputSchema = z.object({
+  register: z.string().min(1, 'Required'),
+  password: z.string().min(5, 'Required'),
+});
+
+export type RegisterInput = z.infer<typeof registerInputSchema>;
+
+const registerWithUsernameAndPassword = (
+  data: RegisterInput,
+): Promise<AuthResponse> => {
+  return api.post('/auth/register', data);
 };
