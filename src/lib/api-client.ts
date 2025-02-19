@@ -88,7 +88,7 @@ async function fetchApi<T>(
     cache,
     next,
   });
-  console.log('response.status', response.status);
+  console.log('response.status', response.status, 'for', fullUrl);
   if (!response.ok) {
     const message = response.statusText;
     // const message = (await response.json()).message || response.statusText;
