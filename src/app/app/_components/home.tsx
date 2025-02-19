@@ -1,19 +1,16 @@
 import { ContentLayout } from '@/components/layouts/content-layout';
-import { api } from '@/lib/api-client';
-import { TestClientComponent } from './test-client-component';
 
 export const Home = async () => {
-  const response = await api.get('/stock-items');
+  // const response = await api.get('/stock-items/1');
 
   return (
     <ContentLayout title="Home">
       <h1 className="text-xl">Welcome</h1>
-      {response.map(({ name, amount }, i) => (
+      {/* {response.map(({ name, amount }, i) => (
         <p key={i}>
           {name} {amount}
         </p>
-      ))}
-      <TestClientComponent />
+      ))} */}
     </ContentLayout>
   );
 };
