@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import { TestClientComponent } from './test-client-component';
 
 export const Home = () => {
-  // const response = await api.get('/stock-items');
-
   const [response, setResponse] = useState([]);
 
   useEffect(() => {
