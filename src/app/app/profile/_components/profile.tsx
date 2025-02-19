@@ -1,6 +1,7 @@
 'use client';
 
 import { useNotifications } from '@/components/ui/notifications';
+import { api } from '@/lib/api-client';
 import { useUser } from '@/lib/auth';
 
 type EntryProps = {
@@ -21,6 +22,27 @@ export const Profile = () => {
   const { addNotification } = useNotifications();
   if (!user) return null;
 
+  const handleApiCall = async () => {
+    try {
+      const response = await api.get('/stock-items');
+      console.log('API Response:', response);
+
+      addNotification({
+        type: 'success',
+        title: 'API Call Successful',
+        message: 'Fetched user profile successfully.',
+      });
+    } catch (error) {
+      console.error('API Call Error:', error);
+
+      addNotification({
+        type: 'error',
+        title: 'API Call Failed',
+        message: (error as Error).message || 'Something went wrong.',
+      });
+    }
+  };
+
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
@@ -33,16 +55,7 @@ export const Profile = () => {
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           Personal details of the user.
         </p>
-        <button
-          onClick={() =>
-            addNotification({
-              type: 'success',
-              title: 'Comment Created',
-            })
-          }
-        >
-          Test Button
-        </button>
+        <button onClick={handleApiCall}>Test Button</button>
       </div>
       <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl className="sm:divide-y sm:divide-gray-200">

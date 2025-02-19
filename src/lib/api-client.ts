@@ -96,6 +96,7 @@ async function fetchApi<T>(
   }
 
   if (!response.ok) {
+    console.log('failed for', url, response.status);
     const message = response.statusText;
     // const message = (await response.json()).message || response.statusText; // TODO fix this
     if (typeof window !== 'undefined') {
