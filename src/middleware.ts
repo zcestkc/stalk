@@ -17,7 +17,10 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
   if (!accessToken) {
     try {
-      console.log('refreshing in middleware with ', refreshToken.value);
+      console.log(
+        'refreshing in middleware with old cookie ',
+        refreshToken.value,
+      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
         {
@@ -29,8 +32,11 @@ export async function middleware(request: NextRequest) {
       );
 
       if (response.ok) {
-        console.log('refreshed successfully in middleware');
         const cookies = response.headers.get('set-cookie');
+        console.log(
+          'refreshed in middleware, new cookie',
+          cookies?.split('refreshToken=')[1].split(';')[0],
+        );
 
         if (cookies) {
           const nextResponse = NextResponse.next();
