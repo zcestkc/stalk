@@ -13,12 +13,12 @@ export async function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get('refreshToken');
 
   if (pathname === '/auth/login') {
-    console.log('Login page accessed, skipping middleware.');
+    // console.log('Login page accessed, skipping middleware.');
     return NextResponse.next();
   }
 
   if (!refreshToken) {
-    console.log('No refresh token found, redirecting to login.');
+    // console.log('No refresh token found, redirecting to login.');
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
@@ -26,10 +26,10 @@ export async function middleware(request: NextRequest) {
     const newToken = await refreshAccessToken(refreshToken);
 
     if (newToken) {
-      console.log('Token refreshed successfully!');
+      //   console.log('Token refreshed successfully!');
       return NextResponse.next();
     } else {
-      console.log('Token refresh failed, redirecting to login.');
+      //   console.log('Token refresh failed, redirecting to login.');
       return NextResponse.redirect(new URL('/auth/login', request.url));
     }
   }
@@ -51,7 +51,13 @@ async function refreshAccessToken(refreshToken: RequestCookie) {
     );
 
     if (response.ok) {
-      return true;
+      const cookies = response.headers.get('set-cookie');
+      if (cookies) {
+        const nextResponse = NextResponse.next();
+        nextResponse.headers.set('Set-Cookie', cookies);
+        return nextResponse;
+      }
+      return NextResponse.next();
     }
 
     return null;
