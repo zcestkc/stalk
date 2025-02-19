@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
   if (!accessToken) {
     try {
-      console.log('refreshing in middleware');
+      console.log('refreshing in middleware with ', refreshToken.value);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
         {

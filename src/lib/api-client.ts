@@ -114,7 +114,7 @@ async function fetchApi<T>(
 
 async function refreshAccessToken(): Promise<boolean> {
   try {
-    console.log('refreshing in api client');
+    console.log('refreshing in api client with ', await getServerCookies());
     const refreshRes = await fetch(`${env.API_URL}/auth/refresh-token`, {
       method: 'POST',
       headers: {
