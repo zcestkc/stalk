@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh
 export async function middleware(request: NextRequest) {
+  console.log('coming here');
   const { pathname } = request.nextUrl;
 
   const accessToken = request.cookies.get('accessToken');
