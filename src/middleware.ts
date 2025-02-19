@@ -1,3 +1,7 @@
+import {
+  RequestCookies,
+  ResponseCookies,
+} from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh NOTE: it is for routes only
@@ -17,10 +21,6 @@ export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
   if (!accessToken) {
     try {
-      console.log(
-        'refreshing in middleware with old cookie ',
-        refreshToken.value,
-      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
         {
@@ -33,14 +33,11 @@ export async function middleware(request: NextRequest) {
 
       if (response.ok) {
         const cookies = response.headers.get('set-cookie');
-        console.log(
-          'refreshed in middleware, new cookie',
-          cookies?.split('refreshToken=')[1].split(';')[0],
-        );
 
         if (cookies) {
           const nextResponse = NextResponse.next();
           nextResponse.headers.set('Set-Cookie', cookies);
+          applySetCookie(request, nextResponse);
           return nextResponse;
         }
       }
@@ -50,6 +47,35 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
+}
+
+/**
+ * Copy cookies from the Set-Cookie header of the response to the Cookie header of the request,
+ * so that it will appear to SSR/RSC as if the user already has the new cookies.
+ */
+function applySetCookie(req: NextRequest, res: NextResponse) {
+  // 1. Parse Set-Cookie header from the response
+  const setCookies = new ResponseCookies(res.headers);
+
+  // 2. Construct updated Cookie header for the request
+  const newReqHeaders = new Headers(req.headers);
+  const newReqCookies = new RequestCookies(newReqHeaders);
+  setCookies.getAll().forEach((cookie) => newReqCookies.set(cookie));
+
+  // 3. Set up the “request header overrides” (see https://github.com/vercel/next.js/pull/41380)
+  //    on a dummy response
+  // NextResponse.next will set x-middleware-override-headers / x-middleware-request-* headers
+  const dummyRes = NextResponse.next({ request: { headers: newReqHeaders } });
+
+  // 4. Copy the “request header overrides” headers from our dummy response to the real response
+  dummyRes.headers.forEach((value, key) => {
+    if (
+      key === 'x-middleware-override-headers' ||
+      key.startsWith('x-middleware-request-')
+    ) {
+      res.headers.set(key, value);
+    }
+  });
 }
 
 export const config = {
