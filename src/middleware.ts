@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-// Middleware to handle token refresh
+// Middleware to handle token refresh NOTE: it is for routes only
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
