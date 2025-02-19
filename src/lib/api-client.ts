@@ -126,7 +126,7 @@ async function refreshAccessToken(): Promise<boolean> {
     });
     // console.log(refreshRes.ok);
     if (refreshRes.ok) {
-      console.log('refreshed in api client');
+      console.log('refreshed successfully in api client');
       return true; // Successfully refreshed token
     }
   } catch (error) {

@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
       );
 
       if (response.ok) {
-        console.log('refreshed in middleware');
+        console.log('refreshed successfully in middleware');
         const cookies = response.headers.get('set-cookie');
 
         if (cookies) {
