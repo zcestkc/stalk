@@ -33,6 +33,7 @@ export async function middleware(request: NextRequest) {
       );
 
       if (response.ok) {
+        console.log('refreshed');
         const cookies = response.headers.get('set-cookie');
 
         if (cookies) {

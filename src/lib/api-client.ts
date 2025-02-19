@@ -88,9 +88,10 @@ async function fetchApi<T>(
     cache,
     next,
   });
-  // console.log(response);
+  console.log('response.status', response.status);
   if (!response.ok) {
-    const message = (await response.json()).message || response.statusText;
+    const message = response.statusText;
+    // const message = (await response.json()).message || response.statusText;
     if (typeof window !== 'undefined') {
       useNotifications.getState().addNotification({
         type: 'error',
