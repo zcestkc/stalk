@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh
 export async function middleware(request: NextRequest) {
-  console.log('coming here');
   const { pathname } = request.nextUrl;
 
   const accessToken = request.cookies.get('accessToken');
@@ -21,6 +20,7 @@ export async function middleware(request: NextRequest) {
       Cookie: `${refreshToken.name}=${refreshToken.value}; `,
     });
     try {
+      console.log('refreshing in middleware');
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
         {
@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
       );
 
       if (response.ok) {
-        console.log('refreshed');
+        console.log('refreshed in middleware');
         const cookies = response.headers.get('set-cookie');
 
         if (cookies) {

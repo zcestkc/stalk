@@ -50,6 +50,7 @@ export function getServerCookies() {
 async function fetchApi<T>(
   url: string,
   options: RequestOptions = {},
+  isRetry = false,
 ): Promise<T> {
   const {
     method = 'GET',
@@ -68,12 +69,10 @@ async function fetchApi<T>(
     cookieHeader = await getServerCookies();
   }
 
-  let fullUrl: string;
-  if (external) {
-    fullUrl = buildUrlWithParams(url, params);
-  } else {
-    fullUrl = buildUrlWithParams(`${env.API_URL}${url}`, params);
-  }
+  const fullUrl = buildUrlWithParams(
+    external ? url : `${env.API_URL}${url}`,
+    params,
+  );
 
   const response = await fetch(fullUrl, {
     method,
@@ -88,10 +87,17 @@ async function fetchApi<T>(
     cache,
     next,
   });
-  console.log('response.status', response.status, 'for', fullUrl);
+
+  if (response.status === 401 && !isRetry) {
+    const refreshed = await refreshAccessToken();
+    if (refreshed) {
+      return fetchApi<T>(url, options, true); // Retry with new token
+    }
+  }
+
   if (!response.ok) {
     const message = response.statusText;
-    // const message = (await response.json()).message || response.statusText;
+    // const message = (await response.json()).message || response.statusText; // TODO fix this
     if (typeof window !== 'undefined') {
       useNotifications.getState().addNotification({
         type: 'error',
@@ -103,6 +109,29 @@ async function fetchApi<T>(
   }
 
   return response.json();
+}
+
+async function refreshAccessToken(): Promise<boolean> {
+  try {
+    console.log('refreshing in api client');
+    const refreshRes = await fetch(`${env.API_URL}/auth/refresh-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Cookie: await getServerCookies(),
+      },
+      credentials: 'include',
+    });
+
+    if (refreshRes.ok) {
+      console.log('refreshed in api client');
+      return true; // Successfully refreshed token
+    }
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+  }
+  return false;
 }
 
 export const api = {
