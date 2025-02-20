@@ -32,9 +32,10 @@ export async function middleware(request: NextRequest) {
 
         if (setCookieHeader) {
           const nextResponse = NextResponse.next();
-          console.log(setCookie.parse(setCookieHeader));
-          const cookies = parseSetCookieHeader(setCookieHeader);
-          cookies.forEach((cookie) => {
+          const cookies = setCookie.splitCookiesString(setCookieHeader);
+
+          cookies.forEach((c) => {
+            const cookie = setCookie.parse(c)[0];
             nextResponse.cookies.set(cookie.name, cookie.value, cookie.options);
           });
           return nextResponse;
@@ -53,42 +54,3 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|logo.svg|sitemap.xml|robots.txt).*)',
   ],
 };
-
-function parseSetCookieHeader(
-  setCookieHeader: string,
-): Array<{ name: string; value: string; options: any }> {
-  const cookies = [];
-
-  // Split by ", " but keep inside quotes safe (to prevent breaking on encoded values)
-  const cookiePairs = setCookieHeader.split(/, (?=[^;]+=[^;])/);
-
-  cookiePairs.forEach((cookieString) => {
-    const parts = cookieString.split('; ');
-    const [name, value] = parts[0].split('=');
-
-    const options: any = {};
-
-    parts.slice(1).forEach((option) => {
-      const [key, val] = option.split('=');
-
-      switch (key.toLowerCase()) {
-        case 'expires':
-          options.expires = new Date(val);
-          break;
-        case 'path':
-          options.path = val;
-          break;
-        case 'samesite':
-          options.sameSite = val.toLowerCase();
-          break;
-        case 'httponly':
-          options.httpOnly = true;
-          break;
-      }
-    });
-
-    cookies.push({ name, value, options });
-  });
-
-  return cookies;
-}
