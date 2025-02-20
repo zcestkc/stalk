@@ -32,11 +32,12 @@ export async function middleware(request: NextRequest) {
 
         if (setCookieHeader) {
           const nextResponse = NextResponse.next();
-          const cookies = setCookie.splitCookiesString(setCookieHeader);
+          const cookies = setCookie
+            .splitCookiesString(setCookieHeader)
+            .map((c) => setCookie.parse(c)[0]);
 
-          cookies.forEach((c) => {
-            const cookie = setCookie.parse(c)[0];
-            nextResponse.cookies.set(cookie.name, cookie.value, cookie.options);
+          cookies.forEach(({ name, value, ...options }) => {
+            nextResponse.cookies.set(name, value, options);
           });
           return nextResponse;
         }
