@@ -1,3 +1,4 @@
+var setCookie = require('set-cookie-parser');
 import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh NOTE: it is for routes only
@@ -31,6 +32,7 @@ export async function middleware(request: NextRequest) {
 
         if (setCookieHeader) {
           const nextResponse = NextResponse.next();
+          console.log(setCookie.parse(setCookieHeader));
           const cookies = parseSetCookieHeader(setCookieHeader);
           cookies.forEach((cookie) => {
             nextResponse.cookies.set(cookie.name, cookie.value, cookie.options);
