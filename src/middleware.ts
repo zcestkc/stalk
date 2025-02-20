@@ -1,12 +1,7 @@
-import {
-  RequestCookies,
-  ResponseCookies,
-} from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse, type NextRequest } from 'next/server';
 
 // Middleware to handle token refresh NOTE: it is for routes only
 export async function middleware(request: NextRequest) {
-  //   return NextResponse.next();
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith('/auth') || pathname === '/') {
@@ -32,12 +27,14 @@ export async function middleware(request: NextRequest) {
       );
 
       if (response.ok) {
-        const cookies = response.headers.get('set-cookie');
+        const setCookieHeader = response.headers.get('set-cookie');
 
-        if (cookies) {
+        if (setCookieHeader) {
           const nextResponse = NextResponse.next();
-          nextResponse.headers.set('Set-Cookie', cookies);
-          applySetCookie(request, nextResponse);
+          const cookies = parseSetCookieHeader(setCookieHeader);
+          cookies.forEach((cookie) => {
+            nextResponse.cookies.set(cookie.name, cookie.value, cookie.options);
+          });
           return nextResponse;
         }
       }
@@ -49,37 +46,47 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-/**
- * Copy cookies from the Set-Cookie header of the response to the Cookie header of the request,
- * so that it will appear to SSR/RSC as if the user already has the new cookies.
- */
-function applySetCookie(req: NextRequest, res: NextResponse) {
-  // 1. Parse Set-Cookie header from the response
-  const setCookies = new ResponseCookies(res.headers);
-
-  // 2. Construct updated Cookie header for the request
-  const newReqHeaders = new Headers(req.headers);
-  const newReqCookies = new RequestCookies(newReqHeaders);
-  setCookies.getAll().forEach((cookie) => newReqCookies.set(cookie));
-
-  // 3. Set up the “request header overrides” (see https://github.com/vercel/next.js/pull/41380)
-  //    on a dummy response
-  // NextResponse.next will set x-middleware-override-headers / x-middleware-request-* headers
-  const dummyRes = NextResponse.next({ request: { headers: newReqHeaders } });
-
-  // 4. Copy the “request header overrides” headers from our dummy response to the real response
-  dummyRes.headers.forEach((value, key) => {
-    if (
-      key === 'x-middleware-override-headers' ||
-      key.startsWith('x-middleware-request-')
-    ) {
-      res.headers.set(key, value);
-    }
-  });
-}
-
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico|logo.svg|sitemap.xml|robots.txt).*)',
   ],
 };
+
+function parseSetCookieHeader(
+  setCookieHeader: string,
+): Array<{ name: string; value: string; options: any }> {
+  const cookies = [];
+
+  // Split by ", " but keep inside quotes safe (to prevent breaking on encoded values)
+  const cookiePairs = setCookieHeader.split(/, (?=[^;]+=[^;])/);
+
+  cookiePairs.forEach((cookieString) => {
+    const parts = cookieString.split('; ');
+    const [name, value] = parts[0].split('=');
+
+    const options: any = {};
+
+    parts.slice(1).forEach((option) => {
+      const [key, val] = option.split('=');
+
+      switch (key.toLowerCase()) {
+        case 'expires':
+          options.expires = new Date(val);
+          break;
+        case 'path':
+          options.path = val;
+          break;
+        case 'samesite':
+          options.sameSite = val.toLowerCase();
+          break;
+        case 'httponly':
+          options.httpOnly = true;
+          break;
+      }
+    });
+
+    cookies.push({ name, value, options });
+  });
+
+  return cookies;
+}
