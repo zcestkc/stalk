@@ -32,7 +32,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           <>
             <Input
               type="text"
-              label="Email Address"
+              label="Username"
               error={formState.errors['username']}
               registration={register('username')}
             />

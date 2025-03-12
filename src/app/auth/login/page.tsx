@@ -1,7 +1,7 @@
 'use client';
 
 import { paths } from '@/config/paths';
-import { LoginForm } from '@/features/auth/login-form';
+import { LoginForm } from '@/features/auth/components/login-form';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const LoginPage = () => {
